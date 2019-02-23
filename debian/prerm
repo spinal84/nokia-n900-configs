@@ -1,0 +1,31 @@
+#!/bin/sh
+# prerm script for nokia-n900-configs
+#
+# see: dh_installdeb(1)
+
+set -e
+
+MAP_FILE=/usr/share/keymaps/arm/qwerty/nokia-n900.map
+KBD_FILE=/etc/default/keyboard
+
+case "$1" in
+    remove|deconfigure)
+        if [ ! -f $KBD_FILE ] && grep -q "\"$MAP_FILE\"" $KBD_FILE ; then
+            sed -e "s,^#\\?KMAP=\"$MAP_FILE\",# !REMOVE ME!," -i $KBD_FILE
+            sed -e '/^# !REMOVE ME!/d' -i $KBD_FILE
+            invoke-rc.d console-setup.sh reload
+        fi
+    ;;
+
+    upgrade|failed-upgrade)
+    ;;
+
+    *)
+        echo "prerm called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
+#DEBHELPER#
+
+exit 0

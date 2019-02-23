@@ -1,0 +1,15 @@
+Source: nokia-n900-configs
+Section: utils
+Priority: optional
+Maintainer: Arthur Demchenkov <spinal.by@gmail.com>
+Build-Depends: debhelper (>= 10)
+Standards-Version: 4.3.0
+
+Package: nokia-n900-configs
+Architecture: all
+Depends:
+ ${misc:Depends},
+ keyboard-configuration,
+ console-setup-linux,
+ kbd
+Description: Provides configs for Nokia N900 device
